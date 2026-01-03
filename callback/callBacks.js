@@ -50,13 +50,12 @@ app.post("/product", (req, res) => {
 
 //  update    the items
 app.put("/product/:id", (req, res) => {
-  const oldItems = product.find((item) => item.id === parseInt(req.body.id));
-
-  if (!oldItems) {
-    res.status(404).send("item does not exist");
-  } else {
-    (oldItems.name = req.body.name || oldItems.name),
+  let oldItems = product.find((item) => item.id === parseInt(req.body.id));
+  if (oldItems) {
+    (oldItems.name = req.body.nam || oldItems.name),
       (oldItems.price = req.body.price || oldItems.price);
+  } else {
+    res.status(404).send("Items with the given id does not exit", req.body.id);
   }
 });
 
