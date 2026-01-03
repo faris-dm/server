@@ -50,13 +50,23 @@ app.post("/product", (req, res) => {
 
 //  update    the items
 app.put("/product/:id", (req, res) => {
-  let oldItems = product.find((item) => item.id === parseInt(req.body.id));
+  const oldItems = product.find((item) => item.id === parseInt(req.params.id));
+
   if (oldItems) {
-    (oldItems.name = req.body.nam || oldItems.name),
-      (oldItems.price = req.body.price || oldItems.price);
+    (oldItems.name = req.body.name || oldItems.name),
+      (oldItems.price = body.price || oldItems.price);
   } else {
-    res.status(404).send("Items with the given id does not exit", req.body.id);
+    res.status(404).send(" item does  not match");
   }
+});
+
+app.delete("/product/:id", (req, res) => {
+  const NeededItem = product.find((item) => item.id === req.body.id);
+  if (NeededItem) {
+    let REmovedIndex = product.indexOf(NeededItem);
+    product.splice(REmovedIndex, 1);
+  }
+  res.status(404).send({ message: "item does not found" });
 });
 
 app.listen(5000, () => {
