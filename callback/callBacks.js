@@ -15,6 +15,7 @@
 
 // import express from "express";
 const express = require("express");
+const { DeleteIcon } = require("lucide-react");
 
 const app = express();
 app.use(express.json());
@@ -56,6 +57,18 @@ app.post("/product/new", (req, res) => {
   res.send(product);
 });
 
+app.delete("/product/:id", (req, res) => {
+  let dleteId = product.find((item) => item.id === parseInt(req.params.id));
+
+  if (dleteId) {
+    const ItemsIndex = product.indexOf(dleteId);
+    product.splice(ItemsIndex, 1);
+    res.send(product, "items deleted succesfull");
+  } else {
+    res.send(" there is no item does  match");
+  }
+});
+
 // app.get("/product/:id", (req, res) => {
 //   let smallItems = product.find((item) => item.id === parseInt(req.params.id));
 
@@ -94,5 +107,5 @@ app.post("/product/new", (req, res) => {
 // });
 
 app.listen(5000, () => {
-  console.log(`https://localhost:5000`);
+  console.log(`http://localhost:5000`);
 });
