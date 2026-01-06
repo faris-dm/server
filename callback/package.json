@@ -4,7 +4,8 @@
   "main": "callBacks.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "type": "module"
+    "type": "module",
+    "dev": "nodemon callback"
   },
   "author": "solo",
   "license": "MIT",

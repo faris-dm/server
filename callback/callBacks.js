@@ -28,46 +28,60 @@ const product = [
   { id: 6, name: "jeet", price: 500 },
 ];
 
+// app.get("/product", (req, res) => {
+//   res.send(product);
+// });
+
+app.get("/", (req, res) => {
+  res.send({ Message: "Wellcome to Home page" });
+});
 app.get("/product", (req, res) => {
   res.send(product);
 });
-
 app.get("/product/:id", (req, res) => {
-  let smallItems = product.find((item) => item.id === parseInt(req.params.id));
-
-  res.send(smallItems);
-});
-
-app.post("/product", (req, res) => {
-  const addItems = {
-    id: product.length + 1,
-    name: req.body.name,
-    price: req.body.price,
-  };
-  product.push(addItems);
-  res.send(product);
-});
-
-//  update    the items
-app.put("/product/:id", (req, res) => {
-  const oldItems = product.find((item) => item.id === parseInt(req.params.id));
-
-  if (oldItems) {
-    (oldItems.name = req.body.name || oldItems.name),
-      (oldItems.price = body.price || oldItems.price);
-  } else {
-    res.status(404).send(" item does  not match");
+  const idElement = product.find((item) => item.id === parseInt(req.params.id));
+  if (!idElement) {
+    res.status(404).send({ message: "item does not exit" });
   }
+  res.send(idElement);
 });
 
-app.delete("/product/:id", (req, res) => {
-  const NeededItem = product.find((item) => item.id === req.body.id);
-  if (NeededItem) {
-    let REmovedIndex = product.indexOf(NeededItem);
-    product.splice(REmovedIndex, 1);
-  }
-  res.status(404).send({ message: "item does not found" });
-});
+// app.get("/product/:id", (req, res) => {
+//   let smallItems = product.find((item) => item.id === parseInt(req.params.id));
+
+//   res.send(smallItems);
+// });
+
+// app.post("/product", (req, res) => {
+//   const addItems = {
+//     id: product.length + 1,
+//     name: req.body.name,
+//     price: req.body.price,
+//   };
+//   product.push(addItems);
+//   res.send(product);
+// });
+
+// //  update    the items
+// app.put("/product/:id", (req, res) => {
+//   const oldItems = product.find((item) => item.id === parseInt(req.params.id));
+
+//   if (oldItems) {
+//     (oldItems.name = req.body.name || oldItems.name),
+//       (oldItems.price = body.price || oldItems.price);
+//   } else {
+//     res.status(404).send(" item does  not match");
+//   }
+// });
+
+// app.delete("/product/:id", (req, res) => {
+//   const NeededItem = product.find((item) => item.id === req.body.id);
+//   if (NeededItem) {
+//     let REmovedIndex = product.indexOf(NeededItem);
+//     product.splice(REmovedIndex, 1);
+//   }
+//   res.status(404).send({ message: "item does not found" });
+// });
 
 app.listen(5000, () => {
   console.log(`https://localhost:5000`);
