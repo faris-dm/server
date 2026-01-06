@@ -45,6 +45,18 @@ app.get("/product/:id", (req, res) => {
   }
   res.send(idElement);
 });
+app.post("/products/new", (req, res) => {
+  const newItems = {
+    id: product.length + 1,
+    name: req.body.name,
+    print: req.body.name,
+  };
+  if (!newItems) {
+    res.status(404).send("inccorect input");
+  }
+  product.push(newItems);
+  res.send(product);
+});
 
 // app.get("/product/:id", (req, res) => {
 //   let smallItems = product.find((item) => item.id === parseInt(req.params.id));
