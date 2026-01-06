@@ -33,23 +33,21 @@ const product = [
 // });
 
 app.get("/", (req, res) => {
-  res.send({ Message: "Wellcome to Home page" });
+  res.send({ Message: "Wellcome to land page" });
 });
 app.get("/product", (req, res) => {
   res.send(product);
 });
 app.get("/product/:id", (req, res) => {
   const idElement = product.find((item) => item.id === parseInt(req.params.id));
-  if (!idElement) {
-    res.status(404).send({ message: "item does not exit" });
-  }
+
   res.send(idElement);
 });
-app.post("/products/new", (req, res) => {
+app.post("/product/new", (req, res) => {
   const newItems = {
     id: product.length + 1,
     name: req.body.name,
-    print: req.body.name,
+    price: req.body.price,
   };
   if (!newItems) {
     res.status(404).send("inccorect input");
