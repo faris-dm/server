@@ -69,6 +69,16 @@ app.delete("/product/:id", (req, res) => {
   }
 });
 
+app.put("/product/:id", (req, res) => {
+  let addNew = product.find((item) => item.id === parseInt(req.params.id));
+  if (addNew) {
+    (addNew.name = req.body.name || addNew.name),
+      (addNew.price = req.body.price || addNew.price);
+  } else {
+    res.send("items does  not match");
+  }
+});
+
 // app.get("/product/:id", (req, res) => {
 //   let smallItems = product.find((item) => item.id === parseInt(req.params.id));
 
