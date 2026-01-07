@@ -83,24 +83,33 @@ app.get("/movies", (req, res) => {
   res.send(MenuMovies);
 });
 
-app.get("/movies/action", (req, res) => {
-  res.send(MovieList.Action);
-});
+// app.get("/movies/action", (req, res) => {
+//   res.send(MovieList.Action);
+// });
+
+// app.get("/movies/:genre", (req, res) => {
+//   if (!MenusList[req.params.genre]) {
+//     res.status(404).send("in correct search item");
+//   } else {
+//     const findHorrorTitle = MenusList[req.params.genre].map(
+//       (item) => item.title
+//     );
+
+//     res.send({ catagories: findHorrorTitle });
+//   }
+// });
 
 app.get("/movies/:genre", (req, res) => {
   if (!MenusList[req.params.genre]) {
-    res.status(404).send("in correct search item");
+    res.status(404).send(" there is no match");
   } else {
-    const findHorrorTitle = MenusList[req.params.genre].map(
-      (item) => item.title
-    );
+    const FindTitle = MenusList[req.params.genre].map((items) => items.title);
 
-    res.send(findHorrorTitle);
+    res.send(FindTitle);
   }
 });
-
 app.get("/movies/love", (req, res) => {
-  res.send(MovieList.Love);
+  res.send("title", MovieList.Love);
 });
 
 const port = 7600;
