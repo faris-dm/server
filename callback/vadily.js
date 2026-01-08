@@ -1,5 +1,8 @@
 const express = require("express");
 
+// https://jossymesfin.vercel.app/
+// https://t.me/josephteka
+
 const app = express();
 app.use(express.json());
 
@@ -84,18 +87,6 @@ app.get("/movies", (req, res) => {
   res.send(MenuMovies);
 });
 
-// app.get("/movies/:genre", (req, res) => {
-//   if (!MenusList[req.params.genre]) {
-//     res.status(404).send("in correct search item");
-//   } else {
-//     const findHorrorTitle = MenusList[req.params.genre].map(
-//       (item) => item.title
-//     );
-
-//     res.send({ catagories: findHorrorTitle });
-//   }
-// });
-
 app.get("/movies/:genre", (req, res) => {
   if (!MenusList[req.params.genre]) {
     res.status(404).send(" there is no match");
@@ -116,12 +107,33 @@ app.post("/movies/:genre", (req, res) => {
       duration: req.body.duration,
     };
     search.push(addNewElemnt);
-    let succes = res.status(201).send;
-    succes(MenusList);
+    res.status(201).send(MenusList);
     console.log(` succefully added`, addNewElemnt);
   } else {
     res.status(404).send(` there is no section with  name`);
     console.log(` request rejected`);
+  }
+});
+
+// update elements
+
+app.put("/movies/:genre/:id", (req, res) => {
+  let inputSearch = MenusList[req.params.genre];
+  if (inputSearch) {
+    let oldItem = inputSearch.find(
+      (item) => item.id === parseInt(req.params.id)
+    );
+    if (oldItem) {
+      (oldItem.title = req.body.title || oldItem.title),
+        (oldItem.description = req.body.description || oldItem.description),
+        (oldItem.duration = req.body.duration || oldItem.duration);
+      res.status(201).send(MenusList[req.params.genre]);
+      console.log("working succesfully");
+    } else {
+      res.status(404).send("items does not match,try again");
+    }
+  } else {
+    res.status(404).send("  item  with this title does catagores");
   }
 });
 
