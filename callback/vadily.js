@@ -107,17 +107,20 @@ app.get("/movies/:genre", (req, res) => {
 });
 
 app.post("/movies/:genre", (req, res) => {
-  if (!MenusList[req.params.genre]) {
-    res.status(404).send(" catagores does not found");
-  } else {
-    const addItems = {
-      id: MenusList[req.params.genre].length + 1,
+  let search = MenusList[req.params.genre];
+  if (search) {
+    let addNewElemnt = {
+      id: search.length + 1,
       title: req.body.title,
       description: req.body.description,
       duration: req.body.duration,
     };
-    MenusList[req.params.genre].push(addItems);
-    res.status(201).send(addItems);
+    search.push(addNewElemnt);
+    let succes = res.status(201).send;
+    succes(MenusList);
+    console.log(` succefully added`, addNewElemnt);
+  } else {
+    res.status(404).send(` there is no section with  name`);
   }
 });
 
