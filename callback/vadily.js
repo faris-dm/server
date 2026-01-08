@@ -121,6 +121,7 @@ app.post("/movies/:genre", (req, res) => {
     console.log(` succefully added`, addNewElemnt);
   } else {
     res.status(404).send(` there is no section with  name`);
+    console.log(` request rejected`);
   }
 });
 
