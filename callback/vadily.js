@@ -1,6 +1,7 @@
 const express = require("express");
 
 const app = express();
+app.use(express.json());
 
 const MenusList = {
   horror: [
@@ -106,16 +107,17 @@ app.get("/movies/:genre", (req, res) => {
 });
 
 app.post("/movies/:genre", (req, res) => {
-  if (!req.params.genre) {
+  if (!MenusList[req.params.genre]) {
     res.status(404).send(" catagores does not found");
   } else {
     const addItems = {
-      id: req.params.genre.length + 1,
-      title: req.body.genre.title,
-      description: req.body.genre.description,
-      duration: req.body.genre.duration,
+      id: MenusList[req.params.genre].length + 1,
+      title: req.body.title,
+      description: req.body.description,
+      duration: req.body.duration,
     };
-    MovieList[genre].push(addItems);
+    MenusList[req.params.genre].push(addItems);
+    res.status(201).send(addItems);
   }
 });
 
