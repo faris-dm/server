@@ -12,8 +12,8 @@ const MenusList = {
     },
     {
       id: 2,
-      title: "IT",
-      description: "Tech related Viresus",
+      title: "Seen Light",
+      description: "monstor Land",
       duration: "2h 3s",
     },
     {
@@ -83,10 +83,6 @@ app.get("/movies", (req, res) => {
   res.send(MenuMovies);
 });
 
-// app.get("/movies/action", (req, res) => {
-//   res.send(MovieList.Action);
-// });
-
 // app.get("/movies/:genre", (req, res) => {
 //   if (!MenusList[req.params.genre]) {
 //     res.status(404).send("in correct search item");
@@ -108,6 +104,21 @@ app.get("/movies/:genre", (req, res) => {
     res.send(FindTitle);
   }
 });
+
+app.post("/movies/:genre", (req, res) => {
+  if (!req.params.genre) {
+    res.status(404).send(" catagores does not found");
+  } else {
+    const addItems = {
+      id: req.params.genre.length + 1,
+      title: req.body.genre.title,
+      description: req.body.genre.description,
+      duration: req.body.genre.duration,
+    };
+    MovieList[genre].push(addItems);
+  }
+});
+
 app.get("/movies/love", (req, res) => {
   res.send("title", MovieList.Love);
 });
