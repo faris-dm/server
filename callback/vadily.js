@@ -83,17 +83,36 @@ app.get("/", (req, res) => {
   res.send({ message: "wellcome   to home pages" });
 });
 
-app.get("/movies", (req, res) => {
-  res.send(MenuMovies);
-});
+// app.get("/movies", (req, res) => {
+//   res.send(MenuMovies);
+// });
+
+// app.get("/movies/:genre", (req, res) => {
+//   if (!MenusList[req.params.genre]) {
+//     res.status(404).send(" there is no match");
+//   } else {
+//     const FindTitle = MenusList[req.params.genre].map((items) => items.title);
+
+//     res.send(FindTitle);
+//   }
+// });
+
+// app.get("/movies/:genre", (req, res) => {
+//   if (!MenusList[req.params.genre]) {
+//     res.send(404).send(" the  is no match in the List");
+//  the title is  a nick name  for the object inside genere which map is searching in
+//   } else {
+//     const FindElements = MenusList[req.params.genre].map((item) => item.title);
+//     res.send(FindElements);
+//   }
+// });
 
 app.get("/movies/:genre", (req, res) => {
-  if (!MenusList[req.params.genre]) {
-    res.status(404).send(" there is no match");
+  if (!MenusList) {
+    res.status(404).send(" Search Doesnot find");
   } else {
-    const FindTitle = MenusList[req.params.genre].map((items) => items.title);
-
-    res.send(FindTitle);
+    const FindedItems = MenusList[req.params.genre].map((item) => item.title);
+    res.status(201).send(FindedItems);
   }
 });
 
