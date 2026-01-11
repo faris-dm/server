@@ -1,4 +1,5 @@
 const express = require("express");
+const { Search, ListMinus } = require("lucide-react");
 
 // https://jossymesfin.vercel.app/
 // https://t.me/josephteka
@@ -83,81 +84,88 @@ app.get("/", (req, res) => {
   res.send({ message: "wellcome   to home pages" });
 });
 
-// app.get("/movies", (req, res) => {
-//   res.send(MenuMovies);
-// });
-
-// app.get("/movies/:genre", (req, res) => {
-//   if (!MenusList[req.params.genre]) {
-//     res.status(404).send(" there is no match");
-//   } else {
-//     const FindTitle = MenusList[req.params.genre].map((items) => items.title);
-
-//     res.send(FindTitle);
-//   }
-// });
-
-// app.get("/movies/:genre", (req, res) => {
-//   if (!MenusList[req.params.genre]) {
-//     res.send(404).send(" the  is no match in the List");
-//  the title is  a nick name  for the object inside genere which map is searching in
-//   } else {
-//     const FindElements = MenusList[req.params.genre].map((item) => item.title);
-//     res.send(FindElements);
-//   }
-// });
+app.get("/movies", (req, res) => {
+  res.send(MenuMovies);
+});
 
 app.get("/movies/:genre", (req, res) => {
-  if (!MenusList) {
-    res.status(404).send(" Search Doesnot find");
+  let searchUser = MenusList[req.params.genre];
+
+  if (!searchUser) {
+    res.status(404).send("Search Does not Match");
+    console.log("request Rejected");
   } else {
-    const FindedItems = MenusList[req.params.genre].map((item) => item.title);
-    res.status(201).send(FindedItems);
+    let Wanted = MenusList[req.params.genre].map((item) => item.title);
+    res.status(201).send(Wanted);
+    console.log("request Done Succefully", Wanted);
   }
 });
 
-app.post("/movies/:genre", (req, res) => {
-  let search = MenusList[req.params.genre];
-  if (search) {
-    let addNewElemnt = {
-      id: search.length + 1,
-      title: req.body.title,
-      description: req.body.description,
-      duration: req.body.duration,
-    };
-    search.push(addNewElemnt);
-    res.status(201).send(MenusList);
-    console.log(` succefully added`, addNewElemnt);
-  } else {
-    res.status(404).send(` there is no section with  name`);
-    console.log(` request rejected`);
-  }
-});
+// app.post("/movies/:genre", (req, res) => {
+//   let search = MenusList[req.params.genre];
+//   if (search) {
+//     let addNewElemnt = {
+//       id: search.length + 1,
+//       title: req.body.title,
+//       description: req.body.description,
+//       duration: req.body.duration,
+//     };
+//     search.push(addNewElemnt);
+//     res.status(201).send(MenusList);
+//     console.log(` succefully added`, addNewElemnt);
+//   } else {
+//     res.status(404).send(` there is no section with  name`);
+//     console.log(` request rejected`);
+//   }
+// });
 
 // update elements
 
+// app.put("/movies/:genre/:id", (req, res) => {
+//   let inputSearch = MenusList[req.params.genre];
+//   if (inputSearch) {
+//     let oldItem = inputSearch.find(
+//       (item) => item.id === parseInt(req.params.id)
+//     );
+//     if (oldItem) {
+//       (oldItem.title = req.body.title || oldItem.title),
+//         (oldItem.description = req.body.description || oldItem.description),
+//         (oldItem.duration = req.body.duration || oldItem.duration);
+//       res.status(201).send(MenusList[req.params.genre]);
+//       console.log("working succesfully");
+//     } else {
+//       res.status(404).send("items does not match,try again");
+//     }
+//   } else {
+//     res.status(404).send("  item  with this title does catagores");
+//   }
+// });
+
 app.put("/movies/:genre/:id", (req, res) => {
-  let inputSearch = MenusList[req.params.genre];
-  if (inputSearch) {
-    let oldItem = inputSearch.find(
-      (item) => item.id === parseInt(req.params.id)
-    );
-    if (oldItem) {
-      (oldItem.title = req.body.title || oldItem.title),
-        (oldItem.description = req.body.description || oldItem.description),
-        (oldItem.duration = req.body.duration || oldItem.duration);
-      res.status(201).send(MenusList[req.params.genre]);
-      console.log("working succesfully");
+  let Search = MenusList[req.params.genre];
+  if (Search) {
+    let itemNeed = Search.find((item) => item.id === parseInt(req.params.id));
+    if (itemNeed) {
+      (itemNeed.title = req.body.title || itemNeed.title),
+        (itemNeed.description = req.body.description || itemNeed.description),
+        (itemNeed.duration = req.body.duration || itemNeed.duration);
+      res.status(201).send(Search);
+
+      console.log(itemNeed);
+      console.log("updated  the item succefully");
+      setTimeout(() => {
+        console.log(itemNeed);
+      }, 100);
     } else {
-      res.status(404).send("items does not match,try again");
+      res.status(404).send("item does not exist");
     }
   } else {
-    res.status(404).send("  item  with this title does catagores");
+    res.status(404).send("search Does not match");
   }
 });
 
 app.get("/movies/love", (req, res) => {
-  res.send("title", MovieList.Love);
+  res.send(" MovieList.Love");
 });
 
 const port = 7600;
