@@ -150,6 +150,34 @@ app.put("/movies/:genre/:id", (req, res) => {
   }
 });
 
+// delet elements
+app.delete("/movies/:genre/:id", (req, res) => {
+  let IsCorrect = MenusList[req.params.genre];
+  if (IsCorrect) {
+    let ID_Elements = IsCorrect.find(
+      (item) => item.id === parseInt(req.params.id)
+    );
+    if (ID_Elements) {
+      let Deleted = IsCorrect.indexOf(ID_Elements);
+      IsCorrect.splice(Deleted, 1);
+      res.status(201).send(IsCorrect);
+      console.log(
+        " deleted array is :",
+        ID_Elements,
+
+        " the remaing elements are :",
+        IsCorrect
+      );
+    } else {
+      res.status(404).send(" there is no iyem with  that id");
+      console.log("in correct id ");
+    }
+  } else {
+    res.status(404).send("Wromg search/ doesnor match");
+    console.log("correct your search");
+  }
+});
+
 app.get("/movies/love", (req, res) => {
   res.send(" MovieList.Love");
 });
