@@ -29,6 +29,8 @@ const product = [
   { id: 6, name: "jeet", price: 500 },
 ];
 
+let MovieBug = [];
+
 // app.get("/product", (req, res) => {
 //   res.send(product);
 // });

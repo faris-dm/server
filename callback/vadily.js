@@ -78,16 +78,6 @@ const MenusList = {
   ],
 };
 
-const MenuMovies = ["horror", "Action", "Love", "Sci-Fi"];
-
-app.get("/", (req, res) => {
-  res.send({ message: "wellcome   to home pages" });
-});
-
-app.get("/movies", (req, res) => {
-  res.send(MenuMovies);
-});
-
 app.get("/movies/:genre", (req, res) => {
   let searchUser = MenusList[req.params.genre];
 
@@ -101,45 +91,41 @@ app.get("/movies/:genre", (req, res) => {
   }
 });
 
-// app.post("/movies/:genre", (req, res) => {
-//   let search = MenusList[req.params.genre];
-//   if (search) {
-//     let addNewElemnt = {
-//       id: search.length + 1,
-//       title: req.body.title,
-//       description: req.body.description,
-//       duration: req.body.duration,
-//     };
-//     search.push(addNewElemnt);
-//     res.status(201).send(MenusList);
-//     console.log(` succefully added`, addNewElemnt);
-//   } else {
-//     res.status(404).send(` there is no section with  name`);
-//     console.log(` request rejected`);
-//   }
-// });
+//get elements by id
+
+// send elements
+
+const MenuMovies = ["horror", "Action", "Love", "Sci-Fi"];
+
+app.get("/", (req, res) => {
+  res.send({ message: "wellcome   to home pages" });
+});
+
+app.get("/movies", (req, res) => {
+  res.send(MenuMovies);
+});
+
+//send elements
+
+app.post("/movies/:genre", (req, res) => {
+  let search = MenusList[req.params.genre];
+  if (!search) {
+    res.status(404).send("caatagore does not exist");
+    console.log("wrong search");
+  } else {
+    let AddedItrm = {
+      id: search.length + 1,
+      title: req.body.title,
+      description: req.body.title,
+      duration: req.body.duration,
+    };
+    search.push(AddedItrm);
+    res.status(404).send(AddedItrm);
+    console.log("added succefully", search);
+  }
+});
 
 // update elements
-
-// app.put("/movies/:genre/:id", (req, res) => {
-//   let inputSearch = MenusList[req.params.genre];
-//   if (inputSearch) {
-//     let oldItem = inputSearch.find(
-//       (item) => item.id === parseInt(req.params.id)
-//     );
-//     if (oldItem) {
-//       (oldItem.title = req.body.title || oldItem.title),
-//         (oldItem.description = req.body.description || oldItem.description),
-//         (oldItem.duration = req.body.duration || oldItem.duration);
-//       res.status(201).send(MenusList[req.params.genre]);
-//       console.log("working succesfully");
-//     } else {
-//       res.status(404).send("items does not match,try again");
-//     }
-//   } else {
-//     res.status(404).send("  item  with this title does catagores");
-//   }
-// });
 
 app.put("/movies/:genre/:id", (req, res) => {
   let Search = MenusList[req.params.genre];
