@@ -1,5 +1,4 @@
 const express = require("express");
-const { Search, ListMinus } = require("lucide-react");
 
 // https://jossymesfin.vercel.app/
 // https://t.me/josephteka
@@ -34,7 +33,7 @@ const MenusList = {
       duration: "3h:30m",
     },
   ],
-  Action: [
+  action: [
     {
       id: 1,
       title: "The Notebook",
@@ -48,7 +47,7 @@ const MenusList = {
       duration: "1h:43s",
     },
   ],
-  Adventure: [
+  adventure: [
     {
       id: 1,
       title: "Inception",
@@ -62,7 +61,7 @@ const MenusList = {
       duration: "2h:30m:2s",
     },
   ],
-  Love: [
+  love: [
     {
       id: 1,
       title: "The Man",
@@ -153,6 +152,7 @@ app.put("/movies/:genre/:id", (req, res) => {
 // delet elements
 app.delete("/movies/:genre/:id", (req, res) => {
   let IsCorrect = MenusList[req.params.genre];
+
   if (IsCorrect) {
     let ID_Elements = IsCorrect.find(
       (item) => item.id === parseInt(req.params.id)
@@ -169,18 +169,57 @@ app.delete("/movies/:genre/:id", (req, res) => {
         IsCorrect
       );
     } else {
-      res.status(404).send(" there is no iyem with  that id");
+      res.status(404).send(" there is no item with  that id");
       console.log("in correct id ");
     }
   } else {
-    res.status(404).send("Wromg search/ doesnor match");
+    res.status(404).send("Wrong search/ does't match");
     console.log("correct your search");
   }
 });
 
-app.get("/movies/love", (req, res) => {
-  res.send(" MovieList.Love");
+//  delete abn eb=ntire array
+
+// app.delete("/movies/:genre", (req, res) => {
+//   let UserPut = MenusList[req.params.genre];
+//   if (!UserPut) {
+//     res.status(404).send("wrong catagores");
+//     console.log("error search");
+//   } else {
+//     let pathObject = MenusList[req.params.genre].find(
+//       (item) => item.title === req.params.title
+//     );
+//     if (pathObject) {
+//       let found = MenusList.indexOf(pathObject);
+//       MenusList.findIndex(found, 1);
+//       res.status(201).send(MenusList);
+//       console.log("deleted catagore succefully");
+//     } else {
+//       res.status(404).send(" object does not much");
+//     }
+//   }
+// });
+
+app.delete("/movies/:genre", (req, res) => {
+  let userInput = MenusList[req.params.genre];
+
+  if (!userInput) {
+    res.status(404).send("item does not have a match");
+  } else {
+    const CatagoresDelete = userInput.find(
+      (item) => item.title === req.params.title
+    );
+    let IndeDeled = MenusList.findIndex(CatagoresDelete);
+
+    userInput.splice(IndeDeled, 1);
+    res.status(201).send(MenusList);
+    console.log("we deleted", indexedDB);
+  }
 });
+
+// app.get("/movies/love", (req, res) => {
+//   res.send(" MovieList.Love");
+// });
 
 const port = 7600;
 
