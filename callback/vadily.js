@@ -1,4 +1,5 @@
 const express = require("express");
+const { UserSearch } = require("lucide-react");
 
 // https://jossymesfin.vercel.app/
 // https://t.me/josephteka
@@ -78,19 +79,39 @@ const MenusList = {
 };
 
 app.get("/movies/:genre", (req, res) => {
-  let searchUser = MenusList[req.params.genre];
+  let LowerUsweeach = req.params.genre.toLowerCase();
+  let searchUser = MenusList[LowerUsweeach];
 
   if (!searchUser) {
     res.status(404).send("Search Does not Match");
     console.log("request Rejected");
   } else {
-    let Wanted = MenusList[req.params.genre].map((item) => item.title);
+    let Wanted = MenusList[LowerUsweeach].map((item) => item.title);
     res.status(201).send(Wanted);
     console.log("request Done Succefully", Wanted);
   }
 });
 
 //get elements by id
+
+app.get("/movies/:genre/:id", (req, res) => {
+  let userSearchlower = req.params.genre.toLowerCase();
+  let UserValidation = MenusList[userSearchlower];
+  if (!UserValidation) {
+    res.status(404).send("No match in the array");
+    console.log("inCorrect typo");
+  } else {
+    let neededId = MenusList[userSearchlower].find(
+      (item) => item.id === parseInt(req.params.id)
+    );
+    if (neededId) {
+      res.status(200).send(neededId);
+      console.log("done succefuklly");
+    } else {
+      res.status(404).send("  there mis no match in the array pleases fix it");
+    }
+  }
+});
 
 // send elements
 
@@ -180,50 +201,15 @@ app.delete("/movies/:genre/:id", (req, res) => {
 
 //  delete abn eb=ntire array
 
-// app.delete("/movies/:genre", (req, res) => {
-//   let UserPut = MenusList[req.params.genre];
-//   if (!UserPut) {
-//     res.status(404).send("wrong catagores");
-//     console.log("error search");
-//   } else {
-//     let pathObject = MenusList[req.params.genre].find(
-//       (item) => item.title === req.params.title
-//     );
-//     if (pathObject) {
-//       let found = MenusList.indexOf(pathObject);
-//       MenusList.findIndex(found, 1);
-//       res.status(201).send(MenusList);
-//       console.log("deleted catagore succefully");
-//     } else {
-//       res.status(404).send(" object does not much");
-//     }
-//   }
-// });
-
-// app.delete("/movies/:genre", (req, res) => {
-//   let userInput = MenusList[req.params.genre];
-
-//   if (!userInput) {
-//     res.status(404).send("item does not have a match");
-//   } else {
-//     const CatagoresDelete = userInput.find(
-//       (item) => item.title === req.params.title
-//     );
-//     let IndeDeled = MenusList.findIndex(CatagoresDelete);
-
-//     userInput.splice(IndeDeled, 1);
-//     res.status(201).send(MenusList);
-//     console.log("we deleted", indexedDB);
-//   }
-// });
 app.delete("/movies/:genre", (req, res) => {
-  let searchUser = MenusList[req.params.genre];
-  if (!searchUser) {
-    res.status(404).send("Input has no match in the ");
+  let userLowerCase = req.params.id;
+  let userSearch = MenusList[userLowerCase];
+  if (!userSearch) {
+    res.status(404).send("item does not have match");
   } else {
     delete MenusList[req.params.genre];
-    res.status(200).send(MenusList);
-    console.log("deleted succfully", MenusList);
+    res.status(200).send(MenusList[req.params.genre]);
+    console.log("delted succefully");
   }
 });
 
