@@ -200,26 +200,32 @@ app.delete("/movies/:genre/:id", (req, res) => {
 //   }
 // });
 
+// app.delete("/movies/:genre", (req, res) => {
+//   let userInput = MenusList[req.params.genre];
+
+//   if (!userInput) {
+//     res.status(404).send("item does not have a match");
+//   } else {
+//     const CatagoresDelete = userInput.find(
+//       (item) => item.title === req.params.title
+//     );
+//     let IndeDeled = MenusList.findIndex(CatagoresDelete);
+
+//     userInput.splice(IndeDeled, 1);
+//     res.status(201).send(MenusList);
+//     console.log("we deleted", indexedDB);
+//   }
+// });
 app.delete("/movies/:genre", (req, res) => {
-  let userInput = MenusList[req.params.genre];
-
-  if (!userInput) {
-    res.status(404).send("item does not have a match");
+  let searchUser = MenusList[req.params.genre];
+  if (!searchUser) {
+    res.status(404).send("Input has no match in the ");
   } else {
-    const CatagoresDelete = userInput.find(
-      (item) => item.title === req.params.title
-    );
-    let IndeDeled = MenusList.findIndex(CatagoresDelete);
-
-    userInput.splice(IndeDeled, 1);
-    res.status(201).send(MenusList);
-    console.log("we deleted", indexedDB);
+    delete MenusList[req.params.genre];
+    res.status(200).send(MenusList);
+    console.log("deleted succfully", MenusList);
   }
 });
-
-// app.get("/movies/love", (req, res) => {
-//   res.send(" MovieList.Love");
-// });
 
 const port = 7600;
 
