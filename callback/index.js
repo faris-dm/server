@@ -20,7 +20,13 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 
 app.get("/", (req, res) => {
-  res.render("hello", { name: "solo" });
+  const hannsInfo = {
+    name: "hanan",
+    age: "23",
+    skill: "parmacy",
+    goal: "to be married  and  have  a family",
+  };
+  res.render("hello", { hannsInfo });
 });
 
 let port = 6500;
