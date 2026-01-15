@@ -5,16 +5,18 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "type": "module",
-    "dev": "nodemon vadily"
+    "dev": "nodemon index"
   },
   "author": "solo",
   "license": "MIT",
   "description": "",
   "dependencies": {
+    "@tailwindcss/cli": "^4.1.18",
     "ejs": "^3.1.10",
     "express": "^5.2.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.11"
+    "nodemon": "^3.1.11",
+    "tailwindcss": "^4.1.18"
   }
 }
