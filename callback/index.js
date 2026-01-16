@@ -15,15 +15,19 @@
 
 let express = require("express");
 let app = express();
+const images = require("./images/pro.jpg");
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 
+// const profileImage=
+
 app.get("/", (req, res) => {
   const hannsInfo = {
-    name: "hanan",
+    name: "Fatima Noor",
     age: "23",
-    skill: "parmacy",
+    profession: "Software Developer",
+    skill: ["Node.js", "Express", "MongoDB", "EJS"],
     goal: "to be married  and  have  a family",
   };
   res.render("hello", { hannsInfo });
