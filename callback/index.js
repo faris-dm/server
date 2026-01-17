@@ -15,7 +15,7 @@
 
 let express = require("express");
 let app = express();
-const images = require("./images/pro.jpg");
+// const images = require("./images/pro.jpg");
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
@@ -27,8 +27,10 @@ app.get("/", (req, res) => {
     name: "Fatima Noor",
     age: "23",
     profession: "Software Developer",
-    skill: ["Node.js", "Express", "MongoDB", "EJS"],
+    skill: [" Node.js  |", " Express |", " MongoDB |", "\t EJS"],
     goal: "to be married  and  have  a family",
+    img: "images",
+    qoutes: "</ coder >",
   };
   res.render("hello", { hannsInfo });
 });
